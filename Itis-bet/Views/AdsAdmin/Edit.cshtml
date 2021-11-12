@@ -1,0 +1,35 @@
+@using DAL.Models.Enums
+@using DAL.Models
+@model DAL.Models.Ads
+
+@{
+    ViewBag.Title = Model.Id == null ? "Ad create" : "Ad edit";
+    Layout = "_AdminPanelLayout";
+}
+
+<div class="form mt-2">
+    @{
+        using (Html.BeginForm(Model.Id == null? "Create" : "Edit", "AdsAdmin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label asp-for="Title">Title</label>
+
+                <input class="form-control" asp-for="Title" type="text" placeholder="Title">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image">Image</label>
+
+                <input class="form-control" asp-for="Image" type="text" placeholder="Image">
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success">
+            </div>
+        }
+    }
+</div>

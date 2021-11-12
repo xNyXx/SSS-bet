@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-widthw, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/admin.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    <a asp-controller="Admin" asp-action="Index" class="header-logo" id="logo">
+        <span class="main-logo">ITIS-Bet</span>
+        <span class="small-logo">I-B</span>
+    </a>
+    <nav class="header-nav">
+        <button class="menu-toggler header-btn" onclick="toggleMenu()">
+            <span class="fas fa-bars toggler"></span>
+        </button>
+        <div class="top-right-menu">
+            <ul class="menu-list">
+                <li class="menu-list-item">
+                    <a asp-controller="Account" asp-action="Index" class="user-info">
+                        <img class="user-avatar" src="https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg"/>
+                        <span class="user-name">@User.Identity.Name</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<content>
+    <menu class="menu" id="menu">
+        <div class="user-panel">
+            <img class="user-avatar" src="https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg"/>
+            <div class="user-info">
+                <span class="user-name">@User.Identity.Name</span>
+                <span class="user-online">Online</span>
+            </div>
+        </div>
+        <div class="search-form-wrapper">
+            <form class="search-form">
+                <div class="search-wrapper">
+                    <input class="search-input" placeholder="Введите запрос"/>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-menu-header">
+                <span>Управление контентом</span>
+            </div>
+            <ul class="nav-menu-list">
+                <li class="nav-menu-list-item @(ViewData["Title"].ToString() == "Users" ? "active" : "")">
+                    <a asp-controller="Admin" asp-action="Users" class="nav-menu-link">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-menu-link-span">Users</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item  @(ViewContext.RouteData.Values["controller"].Equals("MatchAdmin") ? "active" : "")">
+                    <a asp-controller="MatchAdmin" asp-action="Index" class="nav-menu-link">
+                        <i class="fas fa-list-ul"></i>
+                        <span class="nav-menu-link-span">Матчи</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item  @(ViewContext.RouteData.Values["controller"].Equals("BetAdmin") && !ViewContext.RouteData.Values["action"].Equals("User") ? "active" : "")">
+                    <a asp-controller="BetAdmin" asp-action="Index" class="nav-menu-link">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span class="nav-menu-link-span">Ставки</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item @(ViewContext.RouteData.Values["controller"].Equals("BetAdmin") && ViewContext.RouteData.Values["action"].Equals("User") ? "active" : "")">
+                    <a asp-controller="BetAdmin" asp-action="UserBets" class="nav-menu-link">
+                        <i class="fas fa-receipt"></i>
+                        <span class="nav-menu-link-span">Ставки юзеров</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item @(ViewContext.RouteData.Values["controller"].Equals("FinanceAdmin") ? "active" : "")">
+                    <a asp-controller="FinanceAdmin" asp-action="Index" class="nav-menu-link">
+                        <i class="fas fa-wallet"></i>
+                        <span class="nav-menu-link-span">Финансы</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item @(ViewContext.RouteData.Values["controller"].Equals("AdsAdmin") ? "active" : "")">
+                    <a asp-controller="AdsAdmin" asp-action="Index" class="nav-menu-link">
+                        <i class="fas fa-ad"></i>
+                        <span class="nav-menu-link-span">Баннеры</span>
+                    </a>
+                </li>
+
+                <li class="nav-menu-list-item @(ViewData["Title"].ToString() == "Blogs" ? "active" : "")">
+                    <a asp-action="BlogPosts" asp-controller="Admin" class="nav-menu-link">
+                        <i class="far fa-newspaper"></i>
+                        <span class="nav-menu-link-span">Blogs</span>
+                    </a>
+                </li>
+                <li class="nav-menu-list-item @(ViewData["Title"].ToString() == "Comments" ? "active" : "")">
+                    <a asp-action="Comments" asp-controller="Admin" class="nav-menu-link">
+                        <i class="far fa-comments"></i>
+                        <span class="nav-menu-link-span">Comments</span>
+
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </menu>
+    <section class="main-content" id="content">
+        <div class="main-content-header">
+            <h1 class="title">@ViewData["Title"]</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fal fa-home">Главная</i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">@ViewData["Title"]</li>
+            </ol>
+        </div>
+        <div class="main-content-wraper">
+            @RenderBody()
+        </div>
+    </section>
+</content>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="~/js/admin.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

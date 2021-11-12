@@ -1,0 +1,45 @@
+﻿@model BLL.ViewModels.PassportViewModel
+
+@{
+    using (Html.BeginForm("EditPassport", "Account", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        ;
+
+        <div class="form-wrap">
+            <label asp-for="Serial" class="sr-only">Serial number</label>
+
+            <div>
+                <input class="form-control" asp-for="Serial" id="Serial" type="password" placeholder="Serial number"
+                       value="@{ if (Model.Serial != default) { @Model.Serial } }">
+                <span asp-validation-for="Serial" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-wrap">
+            <label asp-for="Number" id="Number" class="sr-only">Passport number</label>
+
+            <div>
+                <input class="form-control" asp-for="Number" type="password" placeholder="Passport number"
+                       value="@{ if (Model.Number != default) { @Model.Number } }">
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-wrap">
+            <label asp-for="Issued" class="sr-only">Issued by</label>
+
+            <div>
+                <input class="form-control" id="Issued" asp-for="Issued" type="text" placeholder="Issued by"
+                       value="@{ if (Model.Issued != default) { @Model.Issued } }">
+                <span asp-validation-for="Issued" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-wrap">
+            <button class="btn primary-btn primary-btn-lg" type="submit">
+                Submit
+            </button>
+        </div>
+    }
+}

@@ -1,0 +1,73 @@
+@using DAL.Models.Enums
+@model IEnumerable<DAL.Models.UsersBets>
+@{
+    ViewBag.Title = "Bets";
+    Layout = "_Layout";
+}
+
+<script type="text/javascript" src="https://vk.com/js/api/share.js?95" charset="windows-1251"></script>
+<div class="container mt-5">
+    <div class="row">
+
+        @await Html.PartialAsync("_GetPersonalMenu")
+
+        <div class="col-md-9 col-sm-12 content">
+            <div class="menu-header">
+                <h5>@ViewBag.Title</h5>
+            </div>
+
+            <table class="table table-bordered-light table-light">
+                <thead>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Match</th>
+                <th>Bet</th>
+                <th>Money</th>
+                <th>Result</th>
+                </thead>
+                <tbody>
+                @{
+                    if (Model.Any())
+                    {
+                        foreach (var bet in Model)
+                        {
+                            <tr>
+                                <td>@bet.Bet.Id</td>
+                                <td>@bet.Time</td>
+                                <td>@bet.Bet.Match.Team1 vs @bet.Bet.Match.Team2</td>
+                                <td>@bet.Bet.Description x @bet.Coef</td>
+                                <td>$@bet.Money</td>
+                                <td>
+                                    @{
+                                        switch (@bet.Result)
+                                        {
+                                            case UserBetResult.Losed:
+                                                <span class="text-danger">Losed</span>
+                                                break;
+                                            case UserBetResult.Won:
+                                                <span class="text-success">Won $@(bet.Money * (decimal) bet.Coef)</span>
+                                                <a target="_blank" class="vk-btn-share" href="https://vk.com/share.php?url=https%3A%2F%2Fitis-bet.herokuapp.com%2F&comment=I won $@(bet.Money * (decimal) bet.Coef)">Share VK</a>
+                                                break;
+                                            default:
+                                                <span class="text-primary">Waiting</span>
+                                                break;
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="text-center text-danger">No bets</div>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

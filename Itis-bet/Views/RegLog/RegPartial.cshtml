@@ -1,0 +1,80 @@
+﻿
+@using Microsoft.AspNetCore.Http
+@model BLL.ViewModels.RegisterViewModel
+
+    <div class="header">
+        <h5 id="regLogHeader">Регистрация</h5>
+        <div class="switch">
+            <div class="switch-text">
+                <span id="regLogSubText">
+                    Вход
+                </span>
+            </div>
+            <div onclick="switchLogReg()" class="switch-btn" data-currentpage="reg" id="logRegSwitch">
+                <span class="circle" id="logRegSwitchCircle">
+
+                </span>
+            </div>
+        </div>
+    </div>
+
+<div class="active">
+    @{
+        if (Context.Session.Keys.Contains("message"))
+        {
+            <div class="alert">@Context.Session.GetString("message")</div>
+        }
+
+        using (Html.BeginForm("Reg", "RegLog", FormMethod.Post, new {@class = "regLogForm"}))
+        {
+            @Html.ValidationMessage("UniqEmailError")
+            @Html.ValidationSummary(true)
+            ;
+            <div class="form-wrap">
+                <label asp-for="@Model.Login" , class="sr-only">Your login</label>
+                <input class="form-control" asp-for="@Model.Login" , type="text" placeholder="Your login">
+                <span asp-validation-for="@Model.Login" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-wrap">
+                <label asp-for="Email" , class="sr-only">Your email</label>
+
+                <div>
+                    <input class="form-control" asp-for="Email" , type="email" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-wrap">
+                <label asp-for="Phone" , class="sr-only">Your phone</label>
+
+                <div>
+                    <input class="form-control" asp-for="Phone" , type="tel" placeholder="Phone">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-wrap">
+                <label asp-for="Password" , class="sr-only">Your password</label>
+
+                <div>
+                    <input class="form-control" asp-for="Password" , type="password" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-wrap">
+                <label asp-for="PasswordConfirm" , class="sr-only">Again your password</label>
+
+                <div>
+                    <input class="form-control" asp-for="PasswordConfirm" , type="password" placeholder="Password">
+                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                </div>
+            </div>
+
+            <input class="btn primary-btn primary-btn-lg" type="submit" value="Зарегистрироваться">
+
+        }
+    }
+</div>

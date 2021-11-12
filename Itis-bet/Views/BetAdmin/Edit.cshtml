@@ -1,0 +1,58 @@
+@using DAL.Models.Enums
+@using DAL.Models
+@model DAL.Models.Bets
+
+@{
+    ViewBag.Title = Model.Id.Equals(Guid.Empty) ? "Создать ставку" : "Редактировать ставку";
+    Layout = "_AdminPanelLayout";
+}
+
+<div class="form mt-2">
+    @{
+        using (Html.BeginForm(Model.Id.Equals(Guid.Empty) ? "Create" : "Edit", "BetAdmin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label asp-for="Description">Ставка</label>
+                <select asp-for="Description" class="form-control"
+                        asp-items="@(new SelectList(Enum.GetValues(typeof(MatchResult))))">
+                    <option>Выберите результат</option>
+                </select>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatchId">Матч</label>
+
+                <select asp-for="MatchId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Matches, "Id", "Title", Model.MatchId))">
+                    <option>Выберите матч</option>
+                </select>
+                <span asp-validation-for="Match" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Coef">Коэффициент</label>
+
+                <input class="form-control" asp-for="Coef" type="text" placeholder="Коэффициент">
+                <span asp-validation-for="Coef" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Status" >Статус</label>
+
+                <select asp-for="Status" class="form-control"
+                        asp-items="@new SelectList(Enum.GetValues(typeof(BetStatus)))">
+                    <option>Выберите статус</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-success">
+            </div>
+
+        }
+    }
+</div>

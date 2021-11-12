@@ -1,0 +1,38 @@
+﻿@{ 
+    ViewData["Title"] = "Личный кабинет";
+}
+@model Tuple<ProfileViewModel, PassportViewModel>
+
+<div class="container mt-5">
+    <div class="row">
+
+        @await Html.PartialAsync("_GetPersonalMenu")
+
+        <div class="col-md-9 col-sm-12 content">
+            <div class="menu-header">
+                <h5>Настройки</h5>
+            </div>
+
+            <div class="background-white">
+
+                <div class="main">
+
+                    <h2>Edit profile</h2>
+                    @await Html.PartialAsync("_EditProfilePartial", Model.Item1)
+                    <hr>
+
+                    <h2>Edit passport</h2>
+                    @await Html.PartialAsync("_EditPassportPartial", Model.Item2)
+                    <hr>
+
+                    <h2>Change password</h2>
+                    @await Html.PartialAsync("_EditPasswordPartial", new EditPasswordViewModel())
+                    <hr>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

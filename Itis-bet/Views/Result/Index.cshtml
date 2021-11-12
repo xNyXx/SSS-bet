@@ -1,0 +1,73 @@
+@model  Dictionary<string, List<DAL.Models.Matches>>
+@{
+    ViewBag.Title = "Results";
+    Layout = "_Layout";
+}
+
+
+<div class="row row-30">
+    <div class="col-lg-12">
+            <!-- Football-->
+            @{
+                if (Model.Any())
+                {
+                    foreach (var tournamentMatch in Model)
+                    {
+                        <article class="heading-component">
+                            <div class="heading-component-inner">
+                                <h5 class="heading-component-title">
+                                    @tournamentMatch.Key
+                                </h5>
+                            </div>
+                        </article>
+
+                        <div class="result-table-wrap">
+                        <div class="result-table">
+                            <div class="result-table-header">
+                                <div class="row align-items-center">
+                                    <div class="col-1"></div>
+                                    <div class="col-3 col-lg-2">
+                                        <span>Date &amp; Time</span>
+                                    </div>
+                                    <div class="col-3 col-lg-5">
+                                        <span>Match</span>
+                                    </div>
+                                    <div class="col-2 col-lg-2">
+                                        <div class="result-table-full-time">
+                                            <span>Full time</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @foreach (var match in tournamentMatch.Value)
+                            {
+                                <div class="result-table-tr">
+                                    <div class="row align-items-center">
+                                        <div class="col-1"></div>
+                                        <div class="col-3 col-lg-2">
+                                            <span>@match.Date</span>
+                                        </div>
+                                        <div class="col-3 col-lg-5">
+                                            <span>@match.Team1 vs. @match.Team2</span>
+                                        </div>
+                                        <div class="col-2 col-lg-2">
+                                            <div class="result-table-half-time">
+                                                @{
+                                                    string[] results = match.Result.Split(':');
+                                                }
+                                                <span>@results[0] : @results[1]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div></div>
+                    }
+                }
+                else
+                {
+                    <h3 class="text-center text-danger">No results</h3>
+                }
+            }
+        </div>
+</div>

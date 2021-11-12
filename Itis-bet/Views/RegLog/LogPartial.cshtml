@@ -1,0 +1,70 @@
+﻿@model BLL.ViewModels.LoginViewModel
+@{ 
+    ViewData["Title"] = "Registration";
+    Layout = "";
+}
+<div class="header">
+    <h5 id="regLogHeader">Вход</h5>
+    <div class="switch">
+        <div class="switch-text">
+            <span id="regLogSubText">
+                Регистрация
+            </span>
+        </div>
+        <div onclick="switchLogReg()" class="switch-btn" data-currentpage="log" id="logRegSwitch">
+            <span class="circle switch-pos-right" id="logRegSwitchCircle">
+
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="active">
+
+    @{
+        using (Html.BeginForm("Log", "RegLog", FormMethod.Post, new { @class = "regLogForm" }))
+        {
+            @Html.ValidationSummary(true);
+            <div class="form-wrap">
+                <label asp-for="Email" , class="sr-only">Email</label>
+
+                <div>
+                    <input class="form-control" asp-for="Email" , type="email" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-wrap">
+                <label asp-for="Password" , class="sr-only">Password</label>
+
+                <div>
+                    <input class="form-control" asp-for="Password" , type="password" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="checkbox-wrap">
+                <label class="checkbox-custom-label" id="checkboxCustomLabel">
+                    <input class="checkbox-custom" id="hiddenCheckbox" type="checkbox" asp-for="Remember"/>
+                    <span id="rememberMeCheckBox" onclick="checkCustomCheckBox()"></span>
+                    <span id="rememberMeText" onclick="checkCustomCheckBox()">
+                        Запомнить меня
+                    </span>
+                </label>
+            </div>
+
+
+
+
+            <button class="btn primary-btn primary-btn-lg" type="submit">
+                Войти
+            </button>
+
+
+            <div class="form-wrap">
+                <a asp-action="VkAuth" class="vk-btn">Войти через ВКонтакте</a>
+            </div>
+
+        }
+    }
+
+</div>

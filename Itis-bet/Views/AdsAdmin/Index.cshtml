@@ -1,0 +1,35 @@
+@{
+    ViewBag.Title = "Баннеры";
+    Layout = "_AdminPanelLayout";
+}
+@model IEnumerable<DAL.Models.Ads>
+
+<div class="mb-2 mt-2">
+    <a class="btn btn-success" asp-controller="AdsAdmin" asp-action="Create">Добавить</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <th>ID</th>
+    <th>Title</th>
+    <th></th>
+    </thead>
+    <tbody>
+    @{
+        if (Model.Any())
+        {
+            foreach (var ad in Model)
+            {
+                <tr>
+                    <td>@ad.Id</td>
+                    <td>@ad.Title</td>
+                    <td>
+                        <a asp-controller="AdsAdmin" asp-action="Edit" asp-route-id="@ad.Id"><i class="fas fa-pen"></i></a>
+                        <a asp-controller="AdsAdmin" asp-action="Remove" asp-route-id="@ad.Id"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        }
+    }
+    </tbody>
+</table>

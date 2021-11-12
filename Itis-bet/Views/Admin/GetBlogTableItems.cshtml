@@ -1,0 +1,20 @@
+﻿@model IEnumerable<BLL.ViewModels.AdminModels.BlogsTableItemVM>
+@{
+    Layout = "";
+}
+<tr>
+    <th>Author</th>
+    <th>Date</th>
+    <th>Sport</th>
+    <th>Header</th>
+</tr>
+@foreach (var v in Model)
+{
+    <tr>
+        <td>@v.Author</td>
+        <td>@v.Published.ToString("dd-MM-yyyy")</td>
+        <td>@v.Sport</td>
+        <td>@v.Header</td>
+    </tr>
+
+}

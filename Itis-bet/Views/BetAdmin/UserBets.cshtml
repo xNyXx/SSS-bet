@@ -1,0 +1,59 @@
+@using DAL.Models.Enums
+@model IEnumerable<DAL.Models.UsersBets>
+
+@{
+    ViewBag.Title = "Ставки юзеров";
+    Layout = "_AdminPanelLayout";
+}
+
+<table class="table table-bordered">
+    <thead>
+    <th>User</th>
+    <th>Date</th>
+    <th>Match</th>
+    <th>Bet</th>
+    <th>Money</th>
+    <th>Result</th>
+    </thead>
+    <tbody>
+    @{
+        if (Model.Any())
+        {
+            foreach (var bet in Model)
+            {
+                <tr>
+                    <td>@bet.User.Email</td> 
+                    <td>@bet.Time</td>
+                    <td>@bet.Bet.Match.Team1 vs @bet.Bet.Match.Team2</td>
+                    <td>@bet.Bet.Description x @bet.Coef</td>
+                    <td>$@bet.Money</td>
+                    <td>
+                        @{
+                            switch (@bet.Result)
+                            {
+                                case UserBetResult.Losed:
+                                    <span class="text-danger">Losed</span>
+                                    break;
+                                case UserBetResult.Won:
+                                    <span class="text-success">Won $@(bet.Money * (decimal) bet.Coef)</span>
+                                    break;
+                                default:
+                                    <span class="text-primary">Waiting</span>
+                                    break;
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <div class="text-center text-danger">No bets</div>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

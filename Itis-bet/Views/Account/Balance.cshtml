@@ -1,0 +1,58 @@
+@using DAL.Models.Enums
+@model IEnumerable<DAL.Models.Transactions>
+@{
+    ViewBag.Title = "Balance";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row">
+
+        @await Html.PartialAsync("_GetPersonalMenu")
+
+        <div class="col-md-9 col-sm-12 content">
+
+            <div class="menu-header">
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="mb-3 h6">
+                Balance: <span class="text-@(ViewBag.Balance >= 0 ? "success" : "danger")">$@ViewBag.Balance</span>
+            </div>
+            <div class="mb-3 h6">
+                For deposits and withdrawals from your account, please contact telegram <a href="https://telegram.com">@@S-Bet_bot</a>
+            </div>
+            <table class="table table-bordered-light table-light">
+                <thead>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Money</th>
+                <th>Bet</th>
+                </thead>
+                <tbody>
+                @{
+                    if (Model.Any())
+                    {
+                        foreach (var transaction in Model)
+                        {
+                            <tr>
+                                <td>@transaction.Date</td>
+                                <td>@transaction.Type</td>
+                                <td>$@transaction.Money</td>
+                                <td>@transaction.User_Bet_Id</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">
+                                <div class="text-center text-danger">No transactions</div>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

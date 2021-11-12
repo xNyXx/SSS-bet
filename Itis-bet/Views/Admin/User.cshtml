@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminPanelLayout";
+}
+@using DAL.Models
+@model User
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Edit user role</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form" asp-action="SetClaim" method="post">
+        <div class="box-body">
+            <div class="form-group">
+                <select class="form-control" name="value">
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                </select>
+            </div>
+            <input type="hidden" name="userId" value="@Model.Id" />
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <input type="submit" class="btn btn-primary" value="Add role" />
+        </div>
+    </form>
+    <form role="form" asp-action="RemoveClaim" method="post">
+        <div class="box-body">
+            <div class="form-group">
+                <select class="form-control" name="value">
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                </select>
+            </div>
+            <input type="hidden" name="userId" value="@Model.Id"/>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <input type="submit" class="btn btn-primary" value="Remove role" />
+        </div>
+    </form>
+</div>

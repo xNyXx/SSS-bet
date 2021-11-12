@@ -1,0 +1,53 @@
+@using DAL.Models.Enums
+@model BLL.ViewModels.AdminModels.FinanceVm
+
+@{
+    ViewBag.Title = "Ред. баланс";
+    Layout = "_AdminPanelLayout";
+}
+
+
+<div class="form mt-2">
+    @{
+        using (Html.BeginForm("Add", "FinanceAdmin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+
+
+            <div class="form-group">
+                <label asp-for="UserId">Юзер</label>
+
+                <select asp-for="UserId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Users, "Id", "Email", Model.UserId))">
+                    <option>Выберите юзера</option>
+                </select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Type">Тип транзакции</label>
+
+                <select asp-for="Type" class="form-control"
+                        asp-items="@new SelectList(Enum.GetValues(typeof(TransactionType)))">
+                    <option>Выберите тип</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Money">Сумма</label>
+
+                <input class="form-control" asp-for="Money" type="text" placeholder="Сумма">
+                <span asp-validation-for="Money" class="text-danger"></span>
+
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-success">
+            </div>
+
+        }
+    }
+</div>

@@ -1,0 +1,15 @@
+﻿@model Tuple<LoginViewModel, RegisterViewModel>
+
+<div class="log-reg-container" id="regLogWraper">
+
+    @if (Model.Item2 != null)
+    {
+        @await Html.PartialAsync("RegPartial", Model.Item2)
+    }
+    else
+    {
+        @await Html.PartialAsync("LogPartial", Model.Item1)
+    }
+
+</div>
+

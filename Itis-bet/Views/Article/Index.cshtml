@@ -1,0 +1,116 @@
+@model IEnumerable<DAL.Models.Articles>
+
+<section class="section section-sm bg-gray-100">
+    <div class="container">
+        <div class="row row-30">
+            <div class="col-lg-8">
+
+                <!-- Heading Component-->
+                <article class="heading-component">
+                    <div class="heading-component-inner">
+
+                        <h5 class="heading-component-title">IN THE SPOTLIGHT</h5>
+
+                    </div>
+                </article>
+
+                @{
+                    if (Model.Any())
+                    {
+                        foreach (var post in Model)
+                        {
+
+                            <!-- Post Corporate-->
+                            <div class="blog-post">
+
+                                <!-- Badge-->
+                                <div class="post-corporate-content">
+                                    <div class="post-corporate-header">
+
+                                        <div class="badge badge-primary">
+                                            @post.Sport
+                                        </div>
+
+                                        <time class="post-corporate-time" datetime="2020">
+                                            @post.PublishedAt
+                                        </time>
+
+                                        <div class="post-corporate-view">
+                                            <i class="icon far fa-eye"></i>@(new Random().Next(10, 300))
+                                        </div>
+
+                                    </div>
+
+                                    <h4 class="post-corporate-title menu" >
+                                        <a asp-controller="Article" , asp-action="Read" asp-route-id="@post.Id">
+                                            @post.Header
+                                        </a>
+                                    </h4>
+
+                                    <div class="post-corporate-text">
+                                        <p>@post.Description</p>
+                                    </div>
+
+                                </div>
+
+                                <!-- Figure -->
+                                <a asp-controller="Article" , asp-action="Read" asp-route-id="@post.Id">
+                                    <img src="@post.Picture" alt="" width="768" height="414">
+                                </a>
+
+                                <!-- Footer -->
+                                <div class="post-corporate-footer menu">
+                                    <div class="post-corporate-comment"><span class="icon mdi mdi-comment-outline"></span><a href="#">@post.Comments.Count Comments</a></div>
+                                    <div class="post-corporate-share">
+                                        <!-- Sharing here -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="blog-post">
+                            <h1>No results.</h1>
+                        </div>
+                    }
+                }
+
+            </div>            
+
+            <div class="col-lg-4">
+
+                <hr><!-- Blog Aside-->
+
+                <div class="blog-post">
+                    <div class="block-aside-item">
+
+                        <!-- Heading Component-->
+                        <article class="heading-component">
+                            <div class="heading-component-inner">
+                                <h5 class="heading-component-title">
+                                    Categories
+                                </h5>
+                            </div>
+                        </article>
+
+                        <!--Block Categories-->
+                        <div class="block-categories">
+
+                            <ul class="list-marked list-marked-categories menu">
+                                <li><a asp-action="BySport" asp-route-sport="1">Football</a></li>
+                                <li><a asp-action="BySport" asp-route-sport="2">Bascetball</a></li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>

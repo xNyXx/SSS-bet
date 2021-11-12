@@ -1,0 +1,86 @@
+@using DAL.Models.Enums
+@model DAL.Models.Matches
+
+@{
+    ViewBag.Title = Model.Id.Equals(Guid.Empty) ? "Создать матч" : "Редактировать матч";
+    Layout = "_AdminPanelLayout";
+}
+
+<div class="form mt-2">
+    @{
+        using (Html.BeginForm(Model.Id.Equals(Guid.Empty) ? "Create" : "Edit", "MatchAdmin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label asp-for="Title">Тайтл</label>
+
+                <input class="form-control" asp-for="Title" type="text" placeholder="Тайтл">
+                <span asp-validation-for="Title" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Sport">Спорт</label>
+
+                <select asp-for="Sport" class="form-control"
+                        asp-items="@new SelectList(Enum.GetValues(typeof(Sport)))">
+                    <option>Выберите спорт</option>
+                </select>
+                <span asp-validation-for="Sport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tournament">Турнир</label>
+
+                <input class="form-control" asp-for="Tournament" type="text" placeholder="Турнир">
+                <span asp-validation-for="Tournament" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Team1">Команда 1</label>
+
+                <input class="form-control" asp-for="Team1" type="text" placeholder="Команда 1">
+                <span asp-validation-for="Team1" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Team2">Команда 2</label>
+
+                <input class="form-control" asp-for="Team2" type="text" placeholder="Команда 2">
+                <span asp-validation-for="Team2" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Date">Дата</label>
+
+                <input class="form-control" asp-for="Date" type="datetime-local" step="1" placeholder="Дата" textmode="Date">
+                <span asp-validation-for="Date" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Result">Результат</label>
+
+                <input class="form-control" asp-for="Result" type="text" placeholder="Результат">
+                <span asp-validation-for="Result" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Status">Статус</label>
+
+                <select asp-for="Status" class="form-control"
+                        asp-items="@new SelectList(Enum.GetValues(typeof(MatchStatus)))">
+                    <option>Выберите статус</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-success">
+            </div>
+
+        }
+    }
+</div>

@@ -1,0 +1,41 @@
+@{
+    ViewBag.Title = "Ставки";
+    Layout = "_AdminPanelLayout";
+}
+@model IEnumerable<DAL.Models.Bets>
+
+<div class="mb-2 mt-2">
+    <a class="btn btn-success" asp-controller="BetAdmin" asp-action="Create">Добавить</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <th>ID</th>
+    <th>Матч</th>
+    <th>Ставка</th>
+    <th>Коэффициент</th>
+    <th>Статус</th>
+    <th></th>
+    </thead>
+    <tbody>
+    @{
+        if (Model.Any())
+        {
+            foreach (var bet in Model)
+            {
+                <tr>
+                    <td>@bet.Id</td>
+                    <td>@bet.Match.Title</td>
+                    <td>@bet.Description</td>
+                    <td>@bet.Coef</td>
+                    <td>@bet.Status</td>
+                    <td>
+                        <a asp-controller="BetAdmin" asp-action="Edit" asp-route-id="@bet.Id"><i class="fas fa-pen"></i></a>
+                        <a asp-controller="BetAdmin" asp-action="Remove" asp-route-id="@bet.Id"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        }
+    }
+    </tbody>
+</table>

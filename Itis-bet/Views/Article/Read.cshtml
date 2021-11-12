@@ -1,0 +1,160 @@
+﻿@model DAL.Models.Articles
+
+@{
+    ViewData["Title"] = Model.Header;
+}
+@using Infrastructure
+<div class="container">
+    <div class="row d-flex flex-row-reverse">
+
+        @await Html.PartialAsync("_GetArticleMenu")
+
+        <div class="col-lg-9 col-md-8 col-sm-12 content">
+
+            <!-- Blog Post -->
+            <div class="blog-post">
+
+                <div class="badge badge-secondary">
+                    News
+                </div>
+
+                <h3 class="blog-post-title">
+                    @Model.Description
+                </h3>
+
+                <div class="blog-post-header">
+
+                    <div class="blog-post-author">
+                        <img class="img-circle" src="~/images/user-3-63x63.jpg" alt="" width="63" height="63">
+                        <p class="post-author">@Model.User.UserName</p>
+                    </div>
+
+                    <div class="blog-post-meta">
+                        <time class="blog-post-time" datetime="2020"><span class="icon mdi mdi-clock"></span>@Model.PublishedAt.ToString("MMMM dd, yyyy")</time>
+                        <div class="blog-post-comment"><span class="icon mdi mdi-comment-outline"></span>@Model.Comments.Count</div>
+                        <div class="blog-post-view"><i class="icon far fa-eye"></i>234</div>
+                    </div>
+
+                </div>
+
+                <div class="blog-post-content">
+
+                    <p>@Model.Content</p>
+
+                    <img src="@Model.Picture" alt="" width="763" height="407">
+
+                    <div class="blog-post-share">
+                        <p>Поделиться новостью</p>
+                        <ul class="share_ul">
+                            <li><a href="#"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Comments Here -->
+            <section class="comments">
+
+                <div class="menu-header">
+
+                    <div class="menu-header-text">
+                        <h5>Комментарии</h5>
+                    </div>
+
+                </div>
+
+
+                <div class="comments-content">
+
+                    <ul class="comments-ul">
+
+
+                        @if (Model.IsCommented)
+                        {
+                            <!-- Post Comment-->
+                            foreach (var comment in Model.Comments)
+                            {
+                                <li class="comment">
+                                    <div class="comment-content">
+
+                                        <div class="comment-avatar">
+                                            <img class="img-circle" src="~/images/user-3-63x63.jpg" alt="" width="63" height="63" />
+                                        </div>
+
+                                        <div class="comment-body">
+                                            <div class="comment-info">
+                                                <div class="commentator-name">
+                                                    <h5>@comment.User.UserName</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="comment-text">
+                                                <p>
+                                                    @comment.Text
+                                                </p>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="comment">
+                                <div class="comment-content">
+
+                                    <p>Here is no comments yet, be first!</p>
+
+                                </div>
+                            </li>
+                        }
+
+                    </ul>
+
+                    <hr>
+
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+
+                            <div class="comment-content create-comment" id="createComment">
+                                <div class="comment-avatar">
+                                    <img class="img-circle" src="~/images/user-3-63x63.jpg" alt="" width="63" height="63" />
+                                </div>
+                                <div class="comment-body">
+                                    <div class="comment-info">
+                                        <div class="commentator-name">
+                                            <h5>@User.Identity.Name</h5>
+                                        </div>
+                                    </div>
+
+                                    <form asp-action="CreateComment" method="post">
+                                        <div class="form-wrap">
+                                            <textarea class="form-control" name="text" placeholder="Введите ваш комментарий"></textarea>
+                                        </div>
+                                        <div class="form-wrap">
+                                            <input class="primary-btn" type="submit" value="Отправить комментарий" />
+                                        </div>
+                                        <input type="hidden" name="articleId" value="@Model.Id" />
+                                        <input type="hidden" name="userId" value="@Model.UserId" />
+                                    </form>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="comment-content create-comment" id="createComment">
+                                <p>You need to log in, to leave comment.</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+@model IEnumerable<DAL.Models.Transactions>
+
+@{
+    ViewBag.Title = "Finance";
+    Layout = "_AdminPanelLayout";
+}
+
+<div class="mb-2 mt-2">
+    <a class="btn btn-success" asp-controller="FinanceAdmin" asp-action="Add">Добавить транзакцию</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <th>ID</th>
+    <th>Юзер</th>
+    <th>Сумма</th>
+    <th>Дата</th>
+    <th>Тип</th>
+    </thead>
+    <tbody>
+    @{
+        if (Model.Any())
+        {
+            foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.Id</td>
+                    <td>@transaction.User.Email</td>
+                    <td>@transaction.Money</td>
+                    <td>@transaction.Date</td>
+                    <td>@transaction.Type</td>
+                </tr>
+            }
+        }
+    }
+    </tbody>
+</table>
+
+<ul class="pagination">
+
+    @{
+        for (int i = 1; i <= Convert.ToInt32(ViewData["pageCount"]); i++)
+        {
+            <li class="page-item"><a class="page-link" asp-route-sortOrder="@ViewData["sortOrder"]" asp-route-search="@ViewData["search"]" asp-route-page="@i">@i</a></li>
+        }
+    }
+</ul>

@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/custom.css"/>
+    <link rel="stylesheet" href="~/css/matches.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;1,500&family=Roboto:wght@400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+</head>
+<body>
+<header class="navbar-dark">
+    <div class="navbar-wrap">
+        <nav>
+            <div class="navbar-panel navbar-darker">
+
+                <button class="navbar-toggle" id="navbarToggler">
+                    <span></span>
+                </button>
+
+                <div class="header-container navbar-panel-inner">
+
+                    <div class="navbar-panel-item navbar-panel-item-left">
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" class="link link-classic">Главная</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="navbar-panel-item navbar-panel-item-right">
+                        <div id="headerRight">
+
+                            <ul class="list-inline list-inline-bordered">
+
+                                <li>
+                                    <select class="select-inline-dark select">
+                                        <option value="en" selected>en</option>
+                                        <option value="ru" selected>ru</option>
+                                    </select>
+                                </li>
+
+                                @{
+                                    if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <li>
+                                            <a class="badge badge-primary" asp-controller="RegLog" asp-action="Index">Регистрация</a>
+                                        </li>
+                                    }
+                                }
+
+                                <li>
+                                    <a class="link link-icon link-icon-left link-classic" id="sign-in-link"
+                                       asp-action="Index" asp-controller="Account"
+                                       onmouseover="coloriseSignInIcon('color-white', 'color-green')"
+                                       onmouseout="coloriseSignInIcon('color-green', 'color-white')">
+
+                                        <span class="fas fa-sign-in-alt fa-icon" id="sign-in-icon"></span>
+                                        <span class="link-icon-text" id="sign-in-text">Аккаунт</span>
+
+                                    </a>
+                                </li>
+                                @{
+                                    if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li>
+                                            <a class="badge badge-primary" asp-controller="RegLog" asp-action="LogOut">Выйти</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="navbar-main" id="headerMain">
+
+                <div class="navbar-main-top" id="navbar-main-top">
+                    <div class="navbar-main-container header-container" id="navbar-main-container">
+
+                        <div class="navbar-brand">
+                            <a class="brand" href="/">
+                                <img class="brand-logo-dark" src="~/images/logo-default-213x82.png" alt="" width="106" height="41">
+                                <img class="brand-logo-light" src="~/images/logo-inverse-213x82.png" alt="" width="106" height="41">
+                            </a>
+                        </div>
+
+                        <div class="navbar-search toggle-original-elements">
+
+                            <button class="navbar-search-toggle toggle-original" data-rd-navbar-toggle=".navbar-search"></button>
+
+                            <form class="search" action="/" data-search-live="search-results-live" method="GET">
+
+                                <div class="search-wrap">
+                                    <input class="navbar-search-form-input form-input" placeholder="Введите запрос" id="navbar-search-form-input" type="text" name="search" value="@(ViewData["search"] ?? "")" autocomplete="off">
+                                    <div class="search-results-live" id="search-results-live"></div>
+                                </div>
+
+                                <button class="search-form-submit fas fa-search" type="submit"></button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="navbar-main-bottom navbar-darker" id="fixibleHeader">
+                    <div class="navbar-main-container header-container">
+
+                        <ul class="navbar-nav">
+
+                            <li class="nav-item @(ViewContext.RouteData.Values["controller"].Equals("Home") ? "active" : "")">
+                                <a class="nav-link" href="/">Sports</a>
+                            </li>
+
+                            <li class="nav-item @(ViewContext.RouteData.Values["controller"].Equals("Article") ? "active" : "")">
+                                <a class="nav-link" asp-controller="Article" asp-action="Index">Blog</a>
+                            </li>
+
+
+                            <li class="nav-item @(ViewContext.RouteData.Values["controller"].Equals("Result") ? "active" : "")">
+                                <a class="nav-link" asp-controller="Result" asp-action="Index">Results</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Privacy">Contact us</a>
+                            </li>
+
+
+                            @{
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
+                                    </li>
+                                }
+                            }
+
+
+                            <li class="nav-item d-xl-none">
+                                <a class="nav-link" asp-controller="Account" asp-action="Index">Account</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </nav>
+    </div>
+</header>
+
+
+<div class="container main-container">
+
+    @RenderBody()
+
+</div>
+
+
+<footer class="border-top footer text-muted">
+
+    <div class="container">
+        &copy; 2021 - ITIS_Bet - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/notify.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script type="text/javascript" src="~/js/WebSocketManager.js"></script>
+    <script type="text/javascript" src="~/js/chat.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>
